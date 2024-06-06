@@ -1,0 +1,88 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: gray;
+    color: white;
+    height: 50px;
+    position: fixed; /* Para o header ficar no lugar */
+    width: 100%; /* Usa 100% da tela (lados) */
+    top: 0; /* fica na parte de cima da tela */
+    z-index: 1000; /* Para q nada fique em cima do header */
+    box-sizing: border-box;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.search-bar {
+    flex-grow: 1;
+    margin: 0 20px;
+    padding: 5px;
+    font-size: 16px;
+}
+
+.login-btn {
+    padding: 5px 10px;
+    font-size: 16px;
+    background-color: white;
+    color: gray;
+    border: none;
+    cursor: pointer;
+}
+
+.container {
+    display: flex;
+    flex-grow: 1;
+    margin-top: 50px; /* Margin para baseada na height do header */
+}
+
+.sidebar {
+    width: 200px;
+    padding: 20px;
+    background-color: #f6f7f8;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 50px; /* Margin para baseada na height do header 2 */
+    bottom: 0;
+    overflow-y: auto;
+}
+
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.sidebar nav ul li {
+    margin: 10px 0;
+}
+
+.sidebar nav ul li a {
+    text-decoration: none;
+    color: gray;
+    font-weight: bold;
+}
+
+.content {
+    flex-grow: 1;
+    padding: 15px;
+    margin-left: 240px; /* Margin igual ao width + padding da sidebar */
+    background-color: #fff;
+    overflow-y: auto;
+    height: calc(100vh - 50px); /* Body height - header height */
+}
