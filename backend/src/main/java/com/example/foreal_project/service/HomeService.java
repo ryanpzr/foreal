@@ -18,4 +18,10 @@ public class HomeService {
         List<Home> data = repository.findAll();
         return data;
     }
+
+    public Home postarDados(HomeDto dto) {
+        Home data = repository.save(new Home(dto));
+        return data;
+
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.foreal_project.model;
 
+import com.example.foreal_project.dto.HomeDto;
 import jakarta.persistence.*;
 import lombok.*;
 @Entity(name = "Home")
@@ -25,4 +26,9 @@ public class Home {
 
     private Integer desgostar;
 
+    public Home(HomeDto dto) {
+        this.autor = dto.autor();
+        this.titulo = dto.titulo();
+        this.conteudo = dto.conteudo();
+    }
 }
