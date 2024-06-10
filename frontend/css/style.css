@@ -15,10 +15,10 @@ header {
     background-color: gray;
     color: white;
     height: 50px;
-    position: fixed; /* Para o header ficar no lugar */
-    width: 100%; /* Usa 100% da tela (lados) */
-    top: 0; /* fica na parte de cima da tela */
-    z-index: 1000; /* Para q nada fique em cima do header */
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
     box-sizing: border-box;
 }
 
@@ -46,7 +46,7 @@ header {
 .container {
     display: flex;
     flex-grow: 1;
-    margin-top: 50px; /* Margin para baseada na height do header */
+    margin-top: 50px;
 }
 
 .sidebar {
@@ -56,7 +56,7 @@ header {
     display: flex;
     flex-direction: column;
     position: fixed;
-    top: 50px; /* Margin para baseada na height do header 2 */
+    top: 50px;
     bottom: 0;
     overflow-y: auto;
 }
@@ -81,8 +81,66 @@ header {
 .content {
     flex-grow: 1;
     padding: 15px;
-    margin-left: 240px; /* Margin igual ao width + padding da sidebar */
+    margin-left: 240px;
     background-color: #fff;
     overflow-y: auto;
-    height: calc(100vh - 50px); /* Body height - header height */
+    height: calc(100vh - 50px);
+}
+
+.page_name {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.le_news {
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+}
+
+.vote-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.vote-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.vote-count {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.news-details {
+    flex-grow: 1;
+}
+
+.news_title {
+    margin: 0;
+    font-size: 20px;
+}
+
+.news_author {
+    margin: 5px 0;
+    color: #777;
+}
+
+.news_content {
+    margin: 10px 0;
+}
+
+.comments-link {
+    text-decoration: none;
+    color: #0079d3;
+    font-weight: bold;
 }
