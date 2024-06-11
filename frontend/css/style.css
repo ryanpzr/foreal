@@ -139,8 +139,30 @@ header {
     margin: 10px 0;
 }
 
+.news_hour {
+    font-size: 14px;
+}
+
 .comments-link {
     text-decoration: none;
     color: #0079d3;
     font-weight: bold;
+    cursor: pointer;
+}
+
+.comments-section {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+}
+
+.comment {
+    margin: 5px 0;
+}
+
+.comment_content {
+    gap: 0;
 }
