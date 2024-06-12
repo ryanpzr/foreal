@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -26,4 +27,7 @@ public interface HomeRepository extends JpaRepository<Home, Long> {
 
     @Query("SELECT h FROM Home h ORDER BY h.gostar DESC")
     List<Home> buscarPopular();
+
+    @Query("SELECT h FROM Home h WHERE h.date >= :date")
+    List<Home> buscarBreaking(@Param("date") LocalDate date);
 }

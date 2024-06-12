@@ -42,8 +42,14 @@ public class HomeController {
     }
 
     @GetMapping("/buscarPopular")
-    public ResponseEntity<List<Home>> buscarBN() {
+    public ResponseEntity<List<Home>> buscarPopular() {
         List<Home> data = service.buscarPopular();
+        return ResponseEntity.ok().body(data);
+    }
+
+    @GetMapping("/buscarBreaking")
+    public ResponseEntity<List<Home>> buscarBN() {
+        List<Home> data = service.buscarBreaking();
         return ResponseEntity.ok().body(data);
     }
 
