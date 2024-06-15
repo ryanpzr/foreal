@@ -171,3 +171,39 @@ header {
 .comment_content {
     gap: 0;
 }
+
+.news-button {
+    background: #777;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    padding: 5px 10px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.4s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.news-button:hover {
+    cursor: pointer;
+    background: #a9a9a9;
+}
+
+.comment-button {
+    background: #777;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.4s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.comment-button:hover {
+    cursor: pointer;
+    background: #a9a9a9;
+}
