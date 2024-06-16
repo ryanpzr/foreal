@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/reset.css"/>
     <link rel="stylesheet" href="css/style.css"/>
     <script src="js/comments.js"></script>
+    <script src="js/popup.js"></script>
 </head>
 
 <body>
@@ -29,7 +30,7 @@
         </div>
         <section class="content">
             <h3 class="page_name">Noticias populares</h3>
-            <button type="button" class="news-button">Publicar noticia</button>
+            <button type="button" class="news-button" id="openFormButton1">Publicar noticia</button>
             
             <article class="le_news">
                 <div class="vote-section">
@@ -45,7 +46,7 @@
                     <a href="#" class="comments-link">Comentarios</a>
                     <div class="comments-section">
                         <div class="comment">
-                            <button type="button" class="comment-button">Comentar</button>
+                            <button type="button" class="comment-button" id="openFormButton2">Comentar</button>
                         </div>
                         <div class="comment">
                             <p class="comment_author">Author says</p>
@@ -65,6 +66,41 @@
                     </div>
                 </div>
             </article>
+
+            <div id="formPopup1" class="modal">
+                <div class="modal-content">
+                    <span class="close-button">&times;</span>
+                    <form id="infoForm1" action="submit_form.php" method="post">
+                        <p class="Title-forms">Escreva a noticia</p>
+                        <label for="author1">Nome do Autor:</label>
+                        <input type="text" id="author1" name="author" required><br><br>
+        
+                        <label for="title1">Titulo:</label>
+                        <input type="text" id="title1" name="title" required><br><br>
+        
+                        <label for="content1">Conteudo:</label>
+                        <textarea id="content1" name="content" required></textarea><br><br>
+        
+                        <input type="submit" value="Submit">
+                    </form>
+                </div>
+            </div>
+        
+            <div id="formPopup2" class="modal">
+                <div class="modal-content">
+                    <span class="close-button">&times;</span>
+                    <form id="infoForm2" action="submit_form.php" method="post">
+                        <p class="Title-forms">Escreva seu comentario</p>
+                        <label for="author2">Nome do Autor:</label>
+                        <input type="text" id="author2" name="author" required><br><br>
+        
+                        <label for="content2">Conteudo:</label>
+                        <textarea id="content2" name="content" required></textarea><br><br>
+        
+                        <input type="submit" value="Submit">
+                    </form>
+                </div>
+            </div>
         </section>
     </div>
 </body>
