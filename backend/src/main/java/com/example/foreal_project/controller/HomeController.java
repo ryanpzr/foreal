@@ -35,6 +35,7 @@ public class HomeController {
         return ResponseEntity.ok().body(data);
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5500")
     @GetMapping("/buscarDadosHome")
     public ResponseEntity<List<Home>> buscarDados() {
         List<Home> data = service.buscarDados();
