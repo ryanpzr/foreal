@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Foreal</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Popular</title>
     <link rel="icon" type="image/x-icon" href="/frontend/assets/favicon.ico">
 
-    <link rel="stylesheet" href="css/reset.css"/>
-    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body>
@@ -16,91 +17,42 @@
         <input type="text" class="search-bar" placeholder="Procurar em Foreal">
         <button class="login-btn">Login</button>
     </header>
+
+    <div class="sidebar">
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="breaking-news.html">Breaking News</a></li>
+                <li><a href="popular.html">Popular</a></li>
+            </ul>
+        </nav>
+    </div>
+
     <div class="container">
-        <div class="sidebar">
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="breaking-news.html">Breaking News</a></li>
-                    <li><a href="popular.html">Popular</a></li>
-                </ul>
-            </nav>
-        </div>
         <section class="content">
-            <h3 class="page_name">Noticias populares</h3>
-            <button type="button" class="news-button" id="openFormButton1">Publicar noticia</button>
 
-            
-            <article class="le_news">
-                <div class="vote-section">
-                    <button class="vote-btn">▲</button>
-                    <span class="vote-count">n</span>
-                    <button class="vote-btn">▼</button>
-                </div>
-                <div class="news-details">
-                    <h2 class="news_title">Title</h2>
-                    <p class="news_author">by Author</p>
-                    <p class="news_content">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                    <p class="news_hour">June 10, 2024 - 10:02 AM</p>
-                    <a href="#" class="comments-link">Comentarios</a>
-                    <div class="comments-section">
-                        <div class="comment">
-                            <button type="button" class="comment-button" id="openFormButton2">Comentar</button>
-                        </div>
-                        <div class="comment">
-                            <p class="comment_author">Author says</p>
-                            <p class="comment_content">Comment 1</p>
-                            <p class="news_hour">June 10, 2024 - 10:11 AM</p>
-                        </div>
-                        <div class="comment">
-                            <p class="comment_author">Author says</p>
-                            <p class="comment_content">Comment 2</p>
-                            <p class="news_hour">June 10, 2024 - 10:18 AM</p>
-                        </div>
-                        <div class="comment">
-                            <p class="comment_author">Author says</p>
-                            <p class="comment_content">Comment 3</p>
-                            <p class="news_hour">June 10, 2024 - 10:21 AM</p>
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-            <div id="formPopup1" class="modal">
-                <div class="modal-content">
-                    <span class="close-button">&times;</span>
-                    <form id="infoForm1" action="submit_form.php" method="post">
-                        <p class="Title-forms">Escreva a noticia</p>
-                        <label for="author1">Nome do Autor:</label>
-                        <input type="text" id="author1" name="author" required><br><br>
-        
-                        <label for="title1">Titulo:</label>
-                        <input type="text" id="title1" name="title" required><br><br>
-        
-                        <label for="content1">Conteudo:</label>
-                        <textarea id="content1" name="content" required></textarea><br><br>
-        
-                        <input type="submit" value="Submit">
-                    </form>
-                </div>
-            </div>
-        
             <div id="formPopup2" class="modal">
                 <div class="modal-content">
                     <span class="close-button">&times;</span>
-                    <form id="infoForm2" action="submit_form.php" method="post">
-                        <p class="Title-forms">Escreva seu comentario</p>
+                    <form id="infoForm2" method="post">
+                        <p class="Title-forms">Escreva um comentário</p><br>
                         <label for="author2">Nome do Autor:</label>
                         <input type="text" id="author2" name="author" required><br><br>
-        
-                        <label for="content2">Conteudo:</label>
-                        <textarea id="content2" name="content" required></textarea><br><br>
-        
-                        <input type="submit" value="Submit">
+
+                        <label for="comment2">Comentário:</label>
+                        <textarea id="comment2" name="comment" required></textarea><br><br>
+
+                        <input type="submit" onclick="enviarComentarios(event)" value="Submit">
                     </form>
                 </div>
             </div>
+
+            <article class="le_news" id="le_news_container"></article>
+
         </section>
     </div>
+
+    <script src="js/popular.js"></script>
 </body>
+
 </html>
