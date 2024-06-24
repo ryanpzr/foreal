@@ -44,6 +44,8 @@ public class Home {
         this.autor = dto.autor();
         this.titulo = dto.titulo();
         this.conteudo = dto.conteudo();
+        this.gostar = 1;
+        this.desgostar = 1;
         this.time = LocalTime.now();
         this.date = LocalDate.now();
     }
