@@ -18,7 +18,7 @@ async function fetchArticle() {
     const main = document.getElementById("le_news_container");
 
     try {
-        const response = await fetch('http://localhost:8080/auth/home/buscarDadosHome', {
+        const response = await fetch('http://localhost:8080/auth/home/buscarBreaking', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -193,45 +193,6 @@ function enviarComentarios(event) {
         .catch(error => {
             console.error('Erro ao enviar os dados:', error);
         });
-}
-
-function enviarPost(event) {
-    event.preventDefault();
-
-    var autor = document.getElementById('author1').value;
-    var titulo = document.getElementById('title1').value;
-    var conteudo = document.getElementById('content1').value;
-
-    var dados = {
-        autor: autor,
-        titulo: titulo,
-        conteudo: conteudo
-    };
-
-    fetch('http://localhost:8080/auth/home/postarDadosHome', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dados)
-    })
-        .then(response => {
-            if (response.ok) {
-                console.log('Dados enviados com sucesso!');
-                alert("Dados enviados com sucesso!")
-                location.reload();
-                limparCamposDoFormulario("infoForm1")
-
-            } else {
-                console.error('Erro ao enviar os dados:', response.statusText);
-                alert("Erro ao enviar os dados")
-                limparCamposDoFormulario("infoForm1")
-            }
-        })
-        .catch(error => {
-            console.error('Erro ao enviar os dados:', error);
-        });
-
 }
 
 function limparCamposDoFormulario(formId) {
