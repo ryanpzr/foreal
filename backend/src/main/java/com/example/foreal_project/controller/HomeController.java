@@ -17,37 +17,42 @@ public class HomeController {
     @Autowired
     private HomeService service;
 
+    @CrossOrigin(origins = "http://127.0.0.1:5501")
     @PostMapping("postarDadosHome")
     public ResponseEntity<Home> postarDados(@RequestBody HomeDto dto) {
         Home data = service.postarDados(dto);
         return ResponseEntity.ok().body(data);
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5501")
     @PostMapping("/like")
     public ResponseEntity<Integer> like(@RequestBody LikeAndDeslikeDTO like) {
         int data = service.darLike(like);
         return ResponseEntity.ok().body(data);
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5501")
     @PostMapping("/deslike")
     public ResponseEntity<Integer> deslike(@RequestBody LikeAndDeslikeDTO like) {
         int data = service.darDeslike(like);
         return ResponseEntity.ok().body(data);
     }
 
-    @CrossOrigin(origins = "http://127.0.0.1:5500")
+    @CrossOrigin(origins = "http://127.0.0.1:5501")
     @GetMapping("/buscarDadosHome")
     public ResponseEntity<List<Home>> buscarDados() {
         List<Home> data = service.buscarDados();
         return ResponseEntity.ok().body(data);
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5501")
     @GetMapping("/buscarPopular")
     public ResponseEntity<List<Home>> buscarPopular() {
         List<Home> data = service.buscarPopular();
         return ResponseEntity.ok().body(data);
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5501")
     @GetMapping("/buscarBreaking")
     public ResponseEntity<List<Home>> buscarBN() {
         List<Home> data = service.buscarBreaking();
