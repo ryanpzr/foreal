@@ -25,8 +25,11 @@ public interface HomeRepository extends JpaRepository<Home, Long> {
     @Query("UPDATE Home h SET h.desgostar = h.desgostar + :likeParam WHERE h.id = :idNumber")
     int darDeslike(@Param("idNumber") Long idNumber, @Param("likeParam") Integer likeParam);
 
-    @Query("SELECT h FROM Home h ORDER BY h.date DESC, h.time DESC")
+    @Query("SELECT h FROM Home h ORDER BY h.gostar DESC")
     List<Home> buscarPopular();
+
+    @Query("SELECT h FROM Home h ORDER BY h.date DESC, h.time DESC")
+    List<Home> buscarHome();
 
     @Query("SELECT h FROM Home h WHERE h.date >= :date")
     List<Home> buscarBreaking(@Param("date") LocalDate date);

@@ -18,7 +18,7 @@ public class HomeService {
     private HomeRepository repository;
 
     public List<Home> buscarDados() {
-        List<Home> data = repository.buscarPopular();
+        List<Home> data = repository.buscarHome();
         return data;
     }
 

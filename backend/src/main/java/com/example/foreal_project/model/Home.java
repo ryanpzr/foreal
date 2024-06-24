@@ -4,6 +4,7 @@ import com.example.foreal_project.dto.HomeDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
