@@ -14,7 +14,7 @@ public class ComentarioController {
     @Autowired
     private ComentarioService service;
 
-    @CrossOrigin(origins = "http://127.0.0.1:5501")
+    @CrossOrigin(origins = "*")
     @PostMapping("/postarComentario")
     public ResponseEntity<Comentario> postarComentario(@RequestBody ComentarioDTO dto) {
         Comentario data = service.postarComentario(dto);
