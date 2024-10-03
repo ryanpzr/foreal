@@ -28,6 +28,9 @@ public interface HomeRepository extends JpaRepository<Home, Long> {
     @Query("SELECT h FROM Home h ORDER BY h.gostar DESC")
     List<Home> buscarPopular();
 
+    @Query("SELECT h FROM Home h ORDER BY h.date DESC, h.time DESC")
+    List<Home> buscarHome();
+
     @Query("SELECT h FROM Home h WHERE h.date >= :date")
     List<Home> buscarBreaking(@Param("date") LocalDate date);
 }
