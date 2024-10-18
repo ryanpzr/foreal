@@ -1,6 +1,13 @@
 <template>
-    <Navbar />
-    <MainPage />
+    <Navbar
+    @componentAddPost="stateOfPost"
+    :imgAddPost="imgAddPost"
+    ></Navbar>
+
+    <MainPage
+    :postState="showAddPost"
+    @componentAddPost="stateOfPost"
+    ></MainPage>
 </template>
 
 <script>
@@ -11,6 +18,21 @@ export default {
   components: {
       Navbar,
       MainPage
+  },
+  data() {
+    return {
+        showAddPost: false,
+        imgAddPost: '/src/assets/img/adicionar.png'
+    }
+  },
+  methods: {
+    stateOfPost(state) {
+      this.showAddPost = state;
+
+      this.imgAddPost = this.showAddPost 
+                ? '/src/assets/img/adicionar-selecionado.png' 
+                : '/src/assets/img/adicionar.png';
+    }
   }
 }
 
