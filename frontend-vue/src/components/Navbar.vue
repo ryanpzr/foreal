@@ -14,20 +14,40 @@
 
         
         <div class="nav_right">
-                <button>
-                    <h1>botao1</h1>
+                <button id="button-addPost" @click="toggleStatePost">
+                    <img :src="imgAddPost">
                 </button>
-
                 <button>
-                    <h1>botao2</h1>
-                </button>
-
-                <button>
-                    <h1>botao3</h1>
+                    <img src="../assets/img/tres-pontos.png">
                 </button>
         </div>
     </nav>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            showAddPost: false,
+        }
+    },
+    props: {
+        imgAddPost: {type: String, required: true}
+    },
+    methods: {
+        toggleStatePost() {
+            if(this.imgAddPost == '/src/assets/img/adicionar.png') {
+                this.showAddPost = true;
+            } else {
+                this.showAddPost = false;
+            }
+
+            this.$emit('componentAddPost', this.showAddPost)
+        }
+    }
+
+}
+</script>
 
 <style scoped>
 
@@ -74,9 +94,21 @@ nav {
 }
 
 button {
-    margin-top: 22px;
-    margin-right: 10%;
+    margin-top: 4%;
+    margin-right: 15%;
     cursor: pointer;
+    color: white;
+    padding: 0;
+    border: none; 
+    background: none; 
+    width: 40px; 
+    height: 40px; 
+}
+
+button img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 </style>
