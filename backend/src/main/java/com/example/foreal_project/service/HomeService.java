@@ -1,7 +1,9 @@
 package com.example.foreal_project.service;
 
 import com.example.foreal_project.dto.HomeDto;
+import com.example.foreal_project.dto.ImgValueDTO;
 import com.example.foreal_project.dto.LikeAndDeslikeDTO;
+import com.example.foreal_project.dto.LikeStateDTO;
 import com.example.foreal_project.model.Home;
 import com.example.foreal_project.repository.HomeRepository;
 import jakarta.transaction.Transactional;
@@ -34,10 +36,6 @@ public class HomeService {
 
     }
 
-    public int darDeslike(LikeAndDeslikeDTO like) {
-        return repository.darDeslike(like.id(), like.likeParam());
-    }
-
     public List<Home> buscarPopular() {
         return repository.buscarPopular();
     }
@@ -45,5 +43,17 @@ public class HomeService {
     public List<Home> buscarBreaking() {
         LocalDate sevenDaysAgo = LocalDate.now().minusDays(7);
         return repository.buscarBreaking(sevenDaysAgo);
+    }
+
+    @Transactional
+    public String updateImgValue(ImgValueDTO imgValueDTO) {
+        repository.updateImgValue(imgValueDTO.id(), imgValueDTO.imgValue());
+        return "";
+    }
+
+    @Transactional
+    public String updateLikeState(LikeStateDTO likeStateDTO) {
+        repository.updateLikeState(likeStateDTO.likeState(), likeStateDTO.id());
+        return "";
     }
 }
