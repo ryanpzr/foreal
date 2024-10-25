@@ -9,6 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "pg": "^8.13.0",
     "vue": "^3.4.29"
   },
   "devDependencies": {

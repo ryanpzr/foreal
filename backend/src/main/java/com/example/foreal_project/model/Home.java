@@ -32,11 +32,13 @@ public class Home {
 
     private Integer gostar;
 
-    private Integer desgostar;
-
     private LocalTime time;
 
     private LocalDate date;
+
+    private String pathImg;
+
+    private Boolean likeState;
 
     @OneToMany(mappedBy = "home", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Comentario> comentarios = new ArrayList<>();
@@ -46,7 +48,8 @@ public class Home {
         this.titulo = dto.titulo();
         this.conteudo = dto.conteudo();
         this.gostar = 1;
-        this.desgostar = 1;
+        this.likeState = false;
+        this.pathImg = "/src/assets/img/like.png";
         this.time = LocalTime.now();
         this.date = LocalDate.now();
     }

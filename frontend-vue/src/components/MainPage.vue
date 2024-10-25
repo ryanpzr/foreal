@@ -4,7 +4,7 @@
             <SectionOptions />
         </div>
 
-        <div class="main-right">
+        <div id="main-right" class="main-right">
             <br><br>
             <Card />
         </div>

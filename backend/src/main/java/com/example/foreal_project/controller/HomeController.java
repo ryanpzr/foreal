@@ -1,7 +1,9 @@
 package com.example.foreal_project.controller;
 
 import com.example.foreal_project.dto.HomeDto;
+import com.example.foreal_project.dto.ImgValueDTO;
 import com.example.foreal_project.dto.LikeAndDeslikeDTO;
+import com.example.foreal_project.dto.LikeStateDTO;
 import com.example.foreal_project.model.Home;
 import com.example.foreal_project.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +27,23 @@ public class HomeController {
     }
 
     @CrossOrigin(origins = "*")
-    @PostMapping("/like")
-    public ResponseEntity<Integer> like(@RequestBody LikeAndDeslikeDTO like) {
-        int data = service.darLike(like);
+    @PutMapping("updateImgValue")
+    public ResponseEntity<String> updateImgValue(@RequestBody ImgValueDTO imgValueDTO) {
+        String data = service.updateImgValue(imgValueDTO);
         return ResponseEntity.ok().body(data);
     }
 
     @CrossOrigin(origins = "*")
-    @PostMapping("/deslike")
-    public ResponseEntity<Integer> deslike(@RequestBody LikeAndDeslikeDTO like) {
-        int data = service.darDeslike(like);
+    @PutMapping("updateLikeState")
+    public ResponseEntity<String> updateLikeState(@RequestBody LikeStateDTO likeStateDTO) {
+        String data = service.updateLikeState(likeStateDTO);
+        return ResponseEntity.ok().body(data);
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping("/like")
+    public ResponseEntity<Integer> like(@RequestBody LikeAndDeslikeDTO like) {
+        int data = service.darLike(like);
         return ResponseEntity.ok().body(data);
     }
 
