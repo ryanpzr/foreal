@@ -31,7 +31,7 @@ public interface HomeRepository extends JpaRepository<Home, Long> {
     List<Home> buscarBreaking(@Param("date") LocalDate date);
 
     @Modifying
-    @Query("UPDATE Home h SET h.pathImg = :imgValue WHERE h.id = :id")
+    @Query("UPDATE Home h SET h.pathImgLike = :imgValue WHERE h.id = :id")
     void updateImgValue(@Param("id") String id, @Param("imgValue") String imgValue);
 
     @Modifying
