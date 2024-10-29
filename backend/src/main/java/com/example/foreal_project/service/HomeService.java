@@ -9,9 +9,19 @@ import com.example.foreal_project.repository.HomeRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Service
 public class HomeService {
@@ -24,10 +34,21 @@ public class HomeService {
         return data;
     }
 
-    public Home postarDados(HomeDto dto) {
-        Home data = repository.save(new Home(dto));
-        return data;
+    public Home postarDados(HomeDto dto) throws IOException {
+        MultipartFile imageData = dto.imagem();
+        String baseDir = "C:/Users/ryanp/foreal/frontend-vue/src/assets/imagesPosts/";
 
+        String filePath = baseDir + imageData.getOriginalFilename();
+        File destine = new File(filePath);
+
+        imageData.transferTo(destine);
+
+        Home home = new Home(dto);
+
+        String fileSplitted = filePath.replaceAll(baseDir, "");
+        home.setPathImagem(fileSplitted);
+
+        return repository.save(home);
     }
 
     @Transactional

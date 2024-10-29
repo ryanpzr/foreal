@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Type;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -36,9 +38,11 @@ public class Home {
 
     private LocalDate date;
 
-    private String pathImg;
+    private String pathImgLike;
 
     private Boolean likeState;
+
+    private String pathImgPost;
 
     @OneToMany(mappedBy = "home", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Comentario> comentarios = new ArrayList<>();
@@ -47,14 +51,19 @@ public class Home {
         this.autor = dto.autor();
         this.titulo = dto.titulo();
         this.conteudo = dto.conteudo();
+        this.pathImgPost = "";
         this.gostar = 1;
         this.likeState = false;
-        this.pathImg = "/src/assets/img/like.png";
+        this.pathImgLike = "/src/assets/img/like.png";
         this.time = LocalTime.now();
         this.date = LocalDate.now();
     }
 
     public Home(Long homeId) {
         this.id = homeId;
+    }
+
+    public void setPathImagem(String pathImagem) {
+        this.pathImgPost = pathImagem;
     }
 }
