@@ -11,7 +11,7 @@
 
         <AddPost class="card-addPost"
             v-show="postState"
-            @actionButtonCloseCard="actionButtonClose()"
+            @actionButtonCloseCard="actionButtonClose"
         ></AddPost>
     </main>
 </template>
@@ -26,9 +26,6 @@ export default {
         SectionOptions,
         Card,
         AddPost
-    },
-    data() {
-        return {}
     },
     props: {
         postState: {type: Boolean, required: true}

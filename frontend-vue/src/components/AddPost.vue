@@ -1,34 +1,96 @@
 <template>
-    <div class="card-post">
-        <button class="button-close" @click="$emit('actionButtonCloseCard', false)">
-            <h1>x</h1>
-        </button>
-        <h2>Criar Novo Post</h2>
-        <form @submit.prevent="submitPost">
-            <div class="form-group">
-                <label for="author">Autor:</label>
-                <input type="text" v-model="author" id="author" required />
-            </div>
-            <div class="form-group">
-                <label for="title">Título:</label>
-                <input type="text" v-model="title" id="title" required />
-            </div>
-            <div class="form-group">
-                <label for="description">Descrição:</label>
-                <input type="description" id="description" required></input>
-            </div>
-            <div class="form-group">
-                <label for="image">Imagem:</label>
-                <input type="file" @change="handleImageUpload" accept="image/*" />
-            </div>
-            <button type="submit">Criar Post</button>
-        </form>
+  <div class="card-post">
+    <div v-if="loading" class="loading-overlay">
+      <div class="spinner"></div>
+      Loading...
     </div>
+
+    <button class="button-close" @click="$emit('actionButtonCloseCard', false)">
+      <h1>x</h1>
+    </button>
+    <h2>Criar Novo Post</h2>
+    <form @submit.prevent="addPost">
+      <div class="form-group">
+        <label for="author">Autor:</label>
+        <input type="text" v-model="author" id="author" required />
+      </div>
+      <div class="form-group">
+        <label for="title">Título:</label>
+        <input type="text" v-model="title" id="title" required />
+      </div>
+      <div class="form-group">
+        <label for="content">Conteudo:</label>
+        <input type="text" v-model="content" id="content" required />
+      </div>
+      <div class="form-group">
+        <label for="image">Imagem:</label>
+        <input type="file" id="image" @change="onFileChange" accept="image/*" />
+      </div>
+      <button type="submit">Criar Post</button>
+    </form>
+  </div>
 </template>
 
 <script>
 export default {
+    data() {
+      return {
+        author: '',
+        title: '',
+        content: '',
+        loading: false,
+        imageFile: null
+      }
+    },
+    methods: {
+      onFileChange(event) {
+        this.imageFile = event.target.files[0];
+      },
+      async addPost() {
+        this.loading = true;
+        const url = 'http://localhost:8080/auth/home/postarDadosHome';
 
+        const formData = new FormData();
+        formData.append("autor", this.author);
+        formData.append("titulo", this.title);
+        formData.append("conteudo", this.content);
+        formData.append("imagem", this.imageFile);
+
+        const loadingDelay = 1200; 
+        
+        try {
+          const response = await fetch(url, {
+            method: "POST",
+            body: formData
+          });
+
+          if (response.ok) {
+            console.log("Requisição realizada com sucesso")
+          } else {
+            console.error("Falha na resposta do servidor");
+            this.loading = false;
+          }
+
+        } catch (error) {
+          console.error("Falha na requisição", error);
+          this.loading = false;
+
+        } finally {
+            setTimeout(() => {
+              this.loading = false;
+              this.$emit('actionButtonCloseCard', false);
+            }, loadingDelay);
+
+            this.clearValues()
+        }
+      }, 
+      clearValues() {
+        this.author = '';
+        this.title = '';
+        this.content = '';
+        this.imageFile = null;
+      }
+    }
 }
 </script>
 
@@ -74,7 +136,7 @@ input[type="text"] {
   border-radius: 4px;
 }
 
-input[type="description"] {
+input[type="content"] {
   width: 98%;
   height: 60px;
   padding: 8px;
@@ -113,4 +175,31 @@ button[type="submit"]:hover {
   height: auto;
 }
 
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  z-index: 10;
+}
+
+.spinner {
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top: 4px solid white;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 </style>
