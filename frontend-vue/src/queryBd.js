@@ -27,8 +27,6 @@ export async function updateImgBd(id, newImgValue) {
 export async function updateLikeState(id, likeState) {
     const url = 'http://localhost:8080/auth/home/updateLikeState';
 
-    console.log(likeState)
-
     const data = {
         id: id,
         likeState: likeState
