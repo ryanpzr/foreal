@@ -25,6 +25,11 @@
       <div class="form-group">
         <label for="image">Imagem:</label>
         <input type="file" id="image" @change="onFileChange" accept="image/*" />
+        <br><br>
+        <template v-if="preview">
+          <label for="image">Preview:</label>
+          <img :src="preview" style="height: 80px; width: 80px;"/>
+        </template>
       </div>
       <button type="submit">Criar Post</button>
     </form>
@@ -39,12 +44,21 @@ export default {
         title: '',
         content: '',
         loading: false,
-        imageFile: null
+        imageFile: null,
+        preview: null
       }
     },
     methods: {
       onFileChange(event) {
-        this.imageFile = event.target.files[0];
+        var input = event.target;
+        if (input.files) {
+          var reader = new FileReader();
+          reader.onload = (e) => {
+            this.preview = e.target.result;
+          }
+          this.imageFile=input.files[0];
+          reader.readAsDataURL(input.files[0]);
+        }
       },
       async addPost() {
         this.loading = true;
@@ -65,6 +79,8 @@ export default {
           });
 
           if (response.ok) {
+            const newJson = response.json()
+            this.$emit('newJson', newJson)
             console.log("Requisição realizada com sucesso")
           } else {
             console.error("Falha na resposta do servidor");
@@ -79,16 +95,15 @@ export default {
             setTimeout(() => {
               this.loading = false;
               this.$emit('actionButtonCloseCard', false);
+              this.clearValues()
             }, loadingDelay);
-
-            this.clearValues()
         }
       }, 
       clearValues() {
         this.author = '';
         this.title = '';
         this.content = '';
-        this.imageFile = null;
+        document.getElementById('image').value = "";
       }
     }
 }
@@ -150,7 +165,7 @@ button[type="submit"] {
   width: 200px;
   height: 40px;
   padding: 2px;
-  margin-top: 210px;
+  margin-top: 130px;
   border: 1px solid #000000;
   background-color: rgb(49, 49, 49);
   color: white;

@@ -12,7 +12,7 @@
 
 <script>
 import Navbar from './components/Navbar.vue';
-import MainPage from './components/MainPage.vue';
+import MainPage from './view/MainPage.vue';
 
 export default {
   components: {
