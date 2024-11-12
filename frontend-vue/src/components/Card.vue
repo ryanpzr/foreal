@@ -7,7 +7,7 @@
         </div>
         <img class="img-post" :src="getImagePost(jsonElement.pathImgPost)"> 
         <div class="like">
-            <button v-on:click="setLike(jsonElement)" class="like-button" aria-label="Like">
+            <button v-on:click="setLikePost(jsonElement)" class="like-button" aria-label="Like">
                 <img style="border: none" :src="jsonElement.pathImgLike" alt="Like" />
             </button>
             <button class="salvar-button" aria-label="Salvar" style="margin-left: 3%;">
@@ -20,108 +20,81 @@
             <p style="margin-left: 10px;">{{ jsonElement.conteudo }}</p>
         </div>
         <div class="button-comment">
-            <button>Comentar</button>
+            <button @click="changeStateComment(jsonElement.id)">Comentar</button>
+            <a href="#" @click.prevent="toggleComments" :class="{'active-comments': showComments}">
+                Exibir Comentários
+            </a>
         </div>
+        <transition-group name="fade" tag="div" v-if="showComments">
+            <div v-for="comment in jsonElement.comentarios" :key="comment.autor" class="card-toComment">
+                <h1>{{ comment.autor }}:</h1>
+                <p style="margin-left: 10px;">{{ comment.comentario }}</p>
+            </div>
+        </transition-group>
         <br>
     </div>
+
+    <AddCommentCard class="card-addPost"
+        v-show="showAddCommentsCard"
+        :newIdPostEmitted="idPostCommentsCard"
+    >
+    </AddCommentCard>
 </template>
 
 <script>
-    import { updateImgBd } from '/src/queryBd.js';
-    import { updateLikeState } from '/src/queryBd.js';
+    import { getAllPosts, setLike } from '/src/js/queryBd.js';
+    import AddCommentCard from './AddCommentCard.vue';
 
     export default {
-
+        emits: ['actionButtonCloseCard', 'commentAdded'],
         data() {
             return {
                 json: [],
                 like: null,
-                isClicked: false
+                isClicked: false,
+                mainState: 'buscarDadosHome',
+                showComments: false,
+                showAddCommentsCard: false,
+                idPostCommentsCard: 0
             }
         },
+        components: {
+            AddCommentCard
+        },
         mounted() {
-            this.getAllPosts();
+            this.getDataPost()
+        },
+        watch: {
+            valueMainState(newVal) {
+                this.mainState = newVal;
+                this.getDataPost(this.mainState);
+            },
+            valueNewJson(newVal) {
+                this.json.push(newVal);
+            }
+        },
+        props: {
+            valueMainState: { type: String, required: true },
+            valueNewJson: {type: Object, required: true}
         },
         methods: {
-            async getAllPosts() {
-                const url = 'http://localhost:8080/auth/home/buscarDadosHome';
-
-                try {
-                    const response = await fetch(url);
-                    if (!response.ok) {
-                        throw new Error(`Response status: ${response.status}`);
-                    }
-
-                    const json = await response.json();
-                    this.json = json;
-
-                } catch (error) {
-                    console.log('Erro ao buscar os posts:', error);
-                }
+            async getDataPost() {
+                const responseJson = await getAllPosts(this.mainState);
+                this.json = responseJson;
             },
-            async setLike(jsonElement) {
-                const url = 'http://localhost:8080/auth/home/like';
-                var likeState = 0;
-
-                this.changeImgLike(jsonElement);
-
-                if(jsonElement.likeState) {
-                    likeState = 1;
-
-                } else {
-                    likeState = -1;
-                }
-
-                const data = {
-                    id: Number(jsonElement.id),
-                    likeParam: likeState
-                }
-
-                try {
-                    const response = await fetch(url, {
-                        method: "POST",
-                        headers: {
-                            'Content-Type': 'application/json' 
-                        },
-                        body: JSON.stringify(data)
-                    });
-
-                    if (response.ok) {
-                        const post = this.json.find(p => p.id === jsonElement.id);
-                        if (post) {
-                            if(jsonElement.likeState) {
-                                post.gostar += 1;
-
-                            } else {
-                                post.gostar -= 1;
-
-                            }
-                        }
-                    }
-
-                } catch (error) {
-                    console.log('Erro ao buscar os posts:', error);
-                }
-            },
-            changeImgLike(jsonElement) {
-
-                jsonElement.likeState = !jsonElement.likeState;
-
-                if (jsonElement.likeState) {
-                    updateImgBd(jsonElement.id, '/src/assets/img/like-clicado.png');
-                    updateLikeState(jsonElement.id, jsonElement.likeState);
-
-                    jsonElement.pathImgLike = '/src/assets/img/like-clicado.png'
-                } else {
-                    updateImgBd(jsonElement.id, '/src/assets/img/like.png');
-                    updateLikeState(jsonElement.id, jsonElement.likeState);
-
-                    jsonElement.pathImgLike = '/src/assets/img/like.png'
-                }
+            async setLikePost(jsonElement) {
+                setLike(jsonElement, this.json);
             },
             getImagePost(value) {
                 const imagePath = new URL(`../assets/imagesPosts/${value}`, import.meta.url).href;
                 return imagePath;
+            },
+            toggleComments() {
+                this.showComments = !this.showComments;
+            },
+            changeStateComment(id) {
+                this.showAddCommentsCard = !this.showAddCommentsCard;
+                this.idPostCommentsCard = id;
             }
         }
     }
@@ -181,19 +154,53 @@
 
     .button-comment {
         display: flex;
+        margin-top: 2%;
         margin-bottom: 3%;
+        align-items: center;
+    }
+
+    a {
+        color: gray;
+        font-size: 10px;
+        margin-left: 10px;
+    }
+
+    a:hover {
+        color: rgb(228, 224, 224);
+        font-size: 10px;
+        margin-left: 10px;
+    }
+
+    .active-comments {
+        color: rgb(228, 224, 224);
+        font-size: 10px;
+        margin-left: 10px;
     }
 
     button {
         height: 30px;
         width: 100px;
         padding: 2px;
-        margin-top: 2%;
         border: 1px solid #000000;
         background-color: rgb(49, 49, 49);
         color: white;
         cursor: pointer;
         border-radius: 4px;
+    }
+
+    .card-toComment {
+        display: flex;
+        margin-left: 15px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity 0.5s;
+    }
+
+    .fade-enter, .fade-leave-to {
+        opacity: 0;
     }
 
     h1 {
