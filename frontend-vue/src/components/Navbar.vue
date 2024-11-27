@@ -7,9 +7,19 @@
         </div>
 
         <div class="nav_center">
-            <h1>
-                BARRA DE PESQUISA!
-            </h1>
+            <form style="margin-top: 18px" action="/search" method="GET">
+                <input 
+                    class="input-search"
+                    type="text" 
+                    name="query" 
+                    placeholder="Digite sua pesquisa..." 
+                    style="background-color: rgb(49, 49, 49); height: 18px; padding: 10px; width: 300px; border: 1px solid rgb(49, 49, 49);">
+                <button 
+                    type="submit" 
+                    style="height: 40px; padding: 10px; background-color: rgb(49, 49, 49); color: white; border: none; cursor: pointer;">
+                    Pesquisar
+                </button>
+            </form>
         </div>
 
         
@@ -17,7 +27,7 @@
                 <button id="button-addPost" @click="toggleStatePost">
                     <img :src="imgAddPost">
                 </button>
-                <button>
+                <button id="button-addPost">
                     <img src="../assets/img/tres-pontos.png">
                 </button>
         </div>
@@ -93,7 +103,7 @@ nav {
     text-align: end;
 }
 
-button {
+#button-addPost {
     margin-top: 4%;
     margin-right: 15%;
     cursor: pointer;
@@ -105,10 +115,20 @@ button {
     height: 40px; 
 }
 
-button img {
+#button-addPost img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.input-search {
+    outline: none;
+    color: white;
+}
+
+.input-search:hover {
+    outline: none;
+    color: white;
 }
 
 </style>

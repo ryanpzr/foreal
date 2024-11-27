@@ -21,11 +21,11 @@
         </div>
         <div class="button-comment">
             <button @click="changeStateComment(jsonElement.id)">Comentar</button>
-            <a href="#" @click.prevent="toggleComments" :class="{'active-comments': showComments}">
+            <a href="#" @click.prevent="toggleComments(jsonElement.id)" :class="{'active-comments': showComments}">
                 Exibir Comentários
             </a>
         </div>
-        <transition-group name="fade" tag="div" v-if="showComments">
+        <transition-group name="fade" tag="div" v-if="jsonElement.id == this.idComment">
             <div v-for="comment in jsonElement.comentarios" :key="comment.autor" class="card-toComment">
                 <h1>{{ comment.autor }}:</h1>
                 <p style="margin-left: 10px;">{{ comment.comentario }}</p>
@@ -37,6 +37,7 @@
     <AddCommentCard class="card-addPost"
         v-show="showAddCommentsCard"
         :newIdPostEmitted="idPostCommentsCard"
+        @valueNewComment="pushNewJsonComment"
     >
     </AddCommentCard>
 </template>
@@ -54,8 +55,10 @@
                 isClicked: false,
                 mainState: 'buscarDadosHome',
                 showComments: false,
+                idComment: '',
                 showAddCommentsCard: false,
-                idPostCommentsCard: 0
+                idPostCommentsCard: 0,
+                newJsonComment: {}
             }
         },
         components: {
@@ -80,6 +83,7 @@
         methods: {
             async getDataPost() {
                 const responseJson = await getAllPosts(this.mainState);
+                console.log(responseJson)
                 this.json = responseJson;
             },
             async setLikePost(jsonElement) {
@@ -89,12 +93,29 @@
                 const imagePath = new URL(`../assets/imagesPosts/${value}`, import.meta.url).href;
                 return imagePath;
             },
-            toggleComments() {
+            toggleComments(id) {
                 this.showComments = !this.showComments;
+
+                if(!this.showComments) {
+                    this.idComment = '';
+                } else {
+                    this.idComment = id;
+                }
             },
             changeStateComment(id) {
                 this.showAddCommentsCard = !this.showAddCommentsCard;
                 this.idPostCommentsCard = id;
+            },
+            pushNewJsonComment(newJson, idPost) {
+                console.log('chegou aqui')
+                console.log(newJson)
+                console.log(idPost)
+
+                for (const element of this.json) {
+                    if (element.id === idPost) {
+                        element.comentarios.push(newJson);
+                    }
+                }
             }
         }
     }

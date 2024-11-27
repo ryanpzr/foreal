@@ -52,9 +52,11 @@
               const response = await setComment(this.author, this.comment, this.idPost);
 
               if (response) {
-                setTimeout(() => {
+                setTimeout(async () => {
+                    const jsonComment = await response.json();
                     this.loading = false;
                     this.clearValues()
+                    this.$emit('valueNewComment', jsonComment, this.idPost)
                 }, loadingDelay);
                 
               } else {
