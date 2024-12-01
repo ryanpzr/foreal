@@ -56,6 +56,13 @@ public class HomeController {
     }
 
     @CrossOrigin(origins = "*")
+    @GetMapping("/getPostSearched/{itemPesquisado}")
+    public ResponseEntity<List<Home>> buscarPostPesquisado(@PathVariable String itemPesquisado) {
+        List<Home> data = service.buscarPostPesquisado(itemPesquisado);
+        return ResponseEntity.ok().body(data);
+    }
+
+    @CrossOrigin(origins = "*")
     @GetMapping("/buscarPopular")
     public ResponseEntity<List<Home>> buscarPopular() {
         List<Home> data = service.buscarPopular();
