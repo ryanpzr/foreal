@@ -7,15 +7,15 @@
         </div>
 
         <div class="nav_center">
-            <form style="margin-top: 18px" action="/search" method="GET">
+            <form style="margin-top: 18px"  @submit.prevent="getJsonOfSearched">
                 <input 
                     class="input-search"
                     type="text" 
                     name="query" 
                     placeholder="Digite sua pesquisa..." 
+                    v-model="itemSearched"
                     style="background-color: rgb(49, 49, 49); height: 18px; padding: 10px; width: 300px; border: 1px solid rgb(49, 49, 49);">
                 <button 
-                    type="submit" 
                     style="height: 40px; padding: 10px; background-color: rgb(49, 49, 49); color: white; border: none; cursor: pointer;">
                     Pesquisar
                 </button>
@@ -35,10 +35,14 @@
 </template>
 
 <script>
+import { getSearchedPost } from '@/js/queryBd';
+
 export default {
     data() {
         return {
             showAddPost: false,
+            itemSearched: '',
+            jsonSearched: {}
         }
     },
     props: {
@@ -53,6 +57,12 @@ export default {
             }
 
             this.$emit('componentAddPost', this.showAddPost)
+        },
+        async getJsonOfSearched() {
+            const value = await getSearchedPost(this.itemSearched);
+            this.jsonSearched = value;
+            this.$emit('jsonOfPostSearched', this.jsonSearched)
+            this.$emit('stateCardPostSearched', true)
         }
     }
 
