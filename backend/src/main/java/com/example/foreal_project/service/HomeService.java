@@ -11,17 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.regex.Pattern;
 
 @Service
 public class HomeService {
@@ -36,7 +29,7 @@ public class HomeService {
 
     public Home postarDados(HomeDto dto) throws IOException {
         MultipartFile imageData = dto.imagem();
-        String baseDir = "C:/Users/ryanp/foreal/frontend-vue/src/assets/imagesPosts/";
+        String baseDir = "C:/foreal/frontend-vue/src/assets/imagesPosts/";
 
         String filePath = baseDir + imageData.getOriginalFilename();
         File destine = new File(filePath);
@@ -76,5 +69,9 @@ public class HomeService {
     public String updateLikeState(LikeStateDTO likeStateDTO) {
         repository.updateLikeState(likeStateDTO.likeState(), likeStateDTO.id());
         return "";
+    }
+
+    public List<Home> buscarPostPesquisado(String itemPesquisado) {
+        return repository.buscarPostPesquisado(itemPesquisado);
     }
 }

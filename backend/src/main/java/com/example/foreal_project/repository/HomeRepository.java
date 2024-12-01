@@ -37,4 +37,7 @@ public interface HomeRepository extends JpaRepository<Home, Long> {
     @Modifying
     @Query("UPDATE Home h SET h.likeState = :value WHERE h.id = :id")
     void updateLikeState(@Param("value") Boolean value, @Param("id") String id);
+
+    @Query("SELECT h FROM Home h WHERE h.titulo = :itemPesquisado")
+    List<Home> buscarPostPesquisado(@Param("itemPesquisado") String itemPesquisado);
 }
