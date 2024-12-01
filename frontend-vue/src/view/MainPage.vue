@@ -9,11 +9,16 @@
         <div id="main-right" class="main-right">
             <br><br>
             <Card 
-                v-if="this.valueMainState != 'suaConta'"
+                v-if="this.valueMainState != 'suaConta' && this.valueMainState != 'cardPostSearched'"
                 :valueMainState="this.valueMainState"
-                :valueNewJson="json"
+                :valueNewPost="json"
             >
             </Card>
+
+            <CardPostSearched
+                v-else-if="this.valueMainState === 'cardPostSearched'"
+            >
+            </CardPostSearched>
             
             <YourAccount 
                 v-else
@@ -34,6 +39,7 @@ import SectionOptions from '../components/SectionOptions.vue';
 import Card from '../components/Card.vue';
 import AddPostCard from '../components/AddPostCard.vue';
 import YourAccount from '../components/YourAccount.vue';
+import CardPostSearched from '@/components/CardPostSearched.vue';
 
 export default {
     data() {
@@ -46,10 +52,12 @@ export default {
         SectionOptions,
         Card,
         AddPostCard,
-        YourAccount
+        YourAccount,
+        CardPostSearched
     },
     props: {
-        postState: {type: Boolean, required: true}
+        postState: {type: Boolean, required: true},
+        stateCardPostSearche: {type: Boolean, required: true}
     },
     methods: {
         actionButtonClose(state) {
@@ -60,6 +68,13 @@ export default {
         },
         saveNewJson(value) {
             this.json = value;
+        }
+    },
+    watch: {
+        stateCardPostSearche(newVal) {
+            if (newVal == true) {
+                this.valueMainState = 'cardPostSearched'
+            }
         }
     }
 }

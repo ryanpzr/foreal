@@ -43,45 +43,27 @@
 </template>
 
 <script>
-    import { getAllPosts, setLike } from '/src/js/queryBd.js';
     import AddCommentCard from './AddCommentCard.vue';
 
     export default {
+        inject: ['postSearched'],
         data() {
             return {
                 json: [],
                 like: null,
-                isClicked: false,
-                mainState: 'buscarDadosHome',
                 showComments: false,
                 idComment: '',
                 showAddCommentsCard: false,
-                idPostCommentsCard: 0            }
+                idPostCommentsCard: 0,
+            }
         },
         components: {
             AddCommentCard
         },
         mounted() {
-            this.getDataPost()
-        },
-        watch: {
-            valueMainState(newVal) {
-                this.mainState = newVal;
-                this.getDataPost();
-            },
-            valueNewPost(newVal) {
-                this.json.push(newVal);
-            }
-        },
-        props: {
-            valueMainState: { type: String, required: true },
-            valueNewPost: {type: Object, required: true}
+            this.json = this.postSearched;
         },
         methods: {
-            async getDataPost() {
-                const responseJson = await getAllPosts(this.mainState);
-                this.json = responseJson;
-            },
             async setLikePost(jsonElement) {
                 setLike(jsonElement, this.json);
             },

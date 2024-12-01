@@ -14,6 +14,24 @@ export async function getAllPosts(mainState) {
     }
 }
 
+export async function getSearchedPost(item) {
+    const url = 'http://localhost:8080/auth/home/getPostSearched/' + item;
+
+    try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+
+        return await response.json();
+
+    } catch (error) {
+        console.log('Erro ao buscar o post pesquisado:', error);
+    }
+
+}
+
 export async function setLike(jsonElement, json) {
     const url = 'http://localhost:8080/auth/home/like';
     var likeState = 0;
