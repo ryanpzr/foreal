@@ -7,13 +7,14 @@
         </div>
 
         <div class="nav_center">
-            <form style="margin-top: 18px"  @submit.prevent="getJsonOfSearched">
+            <form style="margin-top: 18px" @submit.prevent="getJsonOfSearched">
                 <input 
                     class="input-search"
                     type="text" 
                     name="query" 
                     placeholder="Digite sua pesquisa..." 
                     v-model="itemSearched"
+                    id="input-navbar"
                     style="background-color: rgb(49, 49, 49); height: 18px; padding: 10px; width: 300px; border: 1px solid rgb(49, 49, 49);">
                 <button 
                     style="height: 40px; padding: 10px; background-color: rgb(49, 49, 49); color: white; border: none; cursor: pointer;">
@@ -42,7 +43,7 @@ export default {
         return {
             showAddPost: false,
             itemSearched: '',
-            jsonSearched: {}
+            jsonSearched: []
         }
     },
     props: {
@@ -62,7 +63,6 @@ export default {
             const value = await getSearchedPost(this.itemSearched);
             this.jsonSearched = value;
             this.$emit('jsonOfPostSearched', this.jsonSearched)
-            this.$emit('stateCardPostSearched', true)
         }
     }
 

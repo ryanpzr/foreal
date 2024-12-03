@@ -17,6 +17,7 @@
 
             <CardPostSearched
                 v-else-if="this.valueMainState === 'cardPostSearched'"
+                :postSearched="jsonOfPostSearched"
             >
             </CardPostSearched>
             
@@ -45,7 +46,7 @@ export default {
     data() {
         return {
             valueMainState: '',
-            json: {}        
+            json: {}
         }
     },
     components: {
@@ -57,13 +58,14 @@ export default {
     },
     props: {
         postState: {type: Boolean, required: true},
-        stateCardPostSearche: {type: Boolean, required: true}
+        jsonOfPostSearched: {type: Object, required: true}
     },
     methods: {
         actionButtonClose(state) {
             this.$emit('componentAddPost', state)
         },
         changeMainState(value) {
+            document.getElementById('input-navbar').value = '';
             this.valueMainState = value;
         },
         saveNewJson(value) {
@@ -71,10 +73,8 @@ export default {
         }
     },
     watch: {
-        stateCardPostSearche(newVal) {
-            if (newVal == true) {
-                this.valueMainState = 'cardPostSearched'
-            }
+        jsonOfPostSearched() { 
+            this.valueMainState = 'cardPostSearched'
         }
     }
 }

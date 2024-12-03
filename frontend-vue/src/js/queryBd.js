@@ -16,7 +16,6 @@ export async function getAllPosts(mainState) {
 
 export async function getSearchedPost(item) {
     const url = 'http://localhost:8080/auth/home/getPostSearched/' + item;
-
     try {
         const response = await fetch(url);
 

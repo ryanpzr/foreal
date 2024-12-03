@@ -2,21 +2,20 @@
   <Navbar
     @componentAddPost="stateOfPost"
     @jsonOfPostSearched="(newVal) => this.jsonOfPostSearched = newVal"
-    @stateCardPostSearched="(newVal) => this.stateCardPostSearche = newVal"
     :imgAddPost="imgAddPost"
   ></Navbar>
 
   <MainPage
     :postState="showAddPost"
     @componentAddPost="stateOfPost"
-    :stateCardPostSearche="stateCardPostSearche"
+    :jsonOfPostSearched="jsonOfPostSearched"
   ></MainPage>
 </template>
 
 <script>
+import { reactive } from 'vue';
 import Navbar from './components/Navbar.vue';
 import MainPage from './view/MainPage.vue';
-import { reactive, watch } from 'vue';
 
 export default {
 components: {
@@ -27,14 +26,8 @@ data() {
   return {
     showAddPost: false,
     imgAddPost: '/src/assets/img/adicionar.png',
-    jsonOfPostSearched: {},
-    stateCardPostSearche: false
+    jsonOfPostSearched: reactive({})
   }
-},
-provide() {
-  return {
-    postSearched: reactive(this.jsonOfPostSearched)
-  };
 },
 methods: {
   stateOfPost(state) {
