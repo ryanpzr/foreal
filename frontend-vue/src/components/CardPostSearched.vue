@@ -1,5 +1,5 @@
 <template>
-    <div v-for="jsonElement in this.json" id="card" class="card">
+    <div v-for="jsonElement in this.postSearched" id="card" class="card">
         <br>
         <div class="profile">
             <img style="border: none" class="img-profile" src="../assets/img/usuario.png">
@@ -43,25 +43,24 @@
 </template>
 
 <script>
-    import AddCommentCard from './AddCommentCard.vue';
+import AddCommentCard from './AddCommentCard.vue';
 
     export default {
-        inject: ['postSearched'],
         data() {
             return {
-                json: [],
                 like: null,
                 showComments: false,
                 idComment: '',
                 showAddCommentsCard: false,
                 idPostCommentsCard: 0,
+                json: {}
             }
+        },
+        props: {
+            postSearched: Object
         },
         components: {
             AddCommentCard
-        },
-        mounted() {
-            this.json = this.postSearched;
         },
         methods: {
             async setLikePost(jsonElement) {
