@@ -29,7 +29,7 @@ public class HomeService {
 
     public Home postarDados(HomeDto dto) throws IOException {
         MultipartFile imageData = dto.imagem();
-        String baseDir = "C:/foreal/frontend-vue/src/assets/imagesPosts/";
+        String baseDir = "C:/Users/ryanp/VsCode/foreal/frontend-vue/src/assets/imagesPosts/";
 
         String filePath = baseDir + imageData.getOriginalFilename();
         File destine = new File(filePath);
