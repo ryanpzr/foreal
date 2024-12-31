@@ -33,7 +33,7 @@
         </button>
         <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         <a class="button">
-            <img src="../assets/img/Imagem do WhatsApp de 2024-09-12 à(s) 19.53.04_6fbaa5f5.jpg" alt="Descrição da Imagem" class="button-image">
+            <img src="../assets/img/theme.png" alt="Descrição da Imagem" class="button-image">
             <span class="button-text">Tema</span>
         </a>
     </div>

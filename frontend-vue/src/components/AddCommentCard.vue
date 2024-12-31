@@ -5,7 +5,7 @@
         Loading...
       </div>
   
-      <button class="button-close">
+      <button class="button-close" @click="closeCommentCard()">
         <h1>x</h1>
       </button>
       <h2>Adicionar Comentário</h2>
@@ -56,6 +56,7 @@
                     const jsonComment = await response.json();
                     this.loading = false;
                     this.clearValues()
+                    this.$emit('closeCommentCard')
                     this.$emit('valueNewComment', jsonComment, this.idPost)
                 }, loadingDelay);
                 
@@ -66,6 +67,9 @@
             clearValues() {
               this.author = '';
               this.comment = '';
+            },
+            closeCommentCard() {
+              this.$emit('closeCommentCard')
             }
         } 
     }
