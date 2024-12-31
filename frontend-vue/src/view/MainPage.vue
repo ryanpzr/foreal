@@ -73,14 +73,18 @@ export default {
         }
     },
     watch: {
-        jsonOfPostSearched() { 
-            this.valueMainState = 'cardPostSearched'
+        jsonOfPostSearched(val) { 
+            if(val === undefined) {
+                this.valueMainState = 'buscarDadosHome'
+            } else {
+                this.valueMainState = 'cardPostSearched'
+            }
         }
     }
 }
 </script>
 
-<style>
+<style scoped>
 
 .main {
     display: flex;

@@ -21,11 +21,11 @@
         </div>
         <div class="button-comment">
             <button @click="changeStateComment(jsonElement.id)">Comentar</button>
-            <a href="#" @click.prevent="toggleComments(jsonElement.id)" :class="{'active-comments': showComments}">
+            <a href="#" @click.prevent="toggleComments(jsonElement.id)" :class="{'active-comments': showComments[jsonElement.id]}">
                 Exibir Comentários
             </a>
         </div>
-        <transition-group name="fade" tag="div" v-if="jsonElement.id == this.idComment">
+        <transition-group name="fade" tag="div" v-if="showComments[jsonElement.id]">
             <div v-for="comment in jsonElement.comentarios" :key="comment.autor" class="card-toComment">
                 <h1>{{ comment.autor }}:</h1>
                 <p style="margin-left: 10px;">{{ comment.comentario }}</p>
@@ -38,6 +38,7 @@
         v-show="showAddCommentsCard"
         :newIdPostEmitted="idPostCommentsCard"
         @valueNewComment="pushNewComment"
+        @closeCommentCard="this.showAddCommentsCard = !this.showAddCommentsCard"
     >
     </AddCommentCard>
 </template>
@@ -53,7 +54,7 @@
                 like: null,
                 isClicked: false,
                 mainState: 'buscarDadosHome',
-                showComments: false,
+                showComments: {},
                 idComment: '',
                 showAddCommentsCard: false,
                 idPostCommentsCard: 0            }
@@ -90,17 +91,18 @@
                 return imagePath;
             },
             toggleComments(id) {
-                this.showComments = !this.showComments;
+                this.showComments[id] = !this.showComments[id];
 
-                if(!this.showComments) {
-                    this.idComment = '';
-                } else {
-                    this.idComment = id;
-                }
+                    if(!this.showComments[id]) {
+                        this.idComment = '';
+                    } else {
+                        this.idComment = id;
+                    }
+                
             },
             changeStateComment(id) {
-                this.showAddCommentsCard = !this.showAddCommentsCard;
                 this.idPostCommentsCard = id;
+                this.showAddCommentsCard = !this.showAddCommentsCard;
             },
             pushNewComment(newJson, idPost) {
                 console.log('chegou aqui')

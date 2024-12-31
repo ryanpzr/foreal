@@ -7,19 +7,17 @@
         </div>
 
         <div class="nav_center">
-            <form style="margin-top: 18px" @submit.prevent="getJsonOfSearched">
+            <form style="margin-top: 18px">
                 <input 
                     class="input-search"
                     type="text" 
                     name="query" 
                     placeholder="Digite sua pesquisa..." 
                     v-model="itemSearched"
+                    @input="getJsonOfSearched"
                     id="input-navbar"
                     style="background-color: rgb(49, 49, 49); height: 18px; padding: 10px; width: 300px; border: 1px solid rgb(49, 49, 49);">
-                <button 
-                    style="height: 40px; padding: 10px; background-color: rgb(49, 49, 49); color: white; border: none; cursor: pointer;">
-                    Pesquisar
-                </button>
+                
             </form>
         </div>
 
@@ -60,9 +58,20 @@ export default {
             this.$emit('componentAddPost', this.showAddPost)
         },
         async getJsonOfSearched() {
+            if(this.itemSearched === '') {
+                return this.$emit('jsonOfPostSearched', undefined);
+            }
+
             const value = await getSearchedPost(this.itemSearched);
-            this.jsonSearched = value;
-            this.$emit('jsonOfPostSearched', this.jsonSearched)
+
+            if (value.length === 0) {
+                this.$emit('jsonOfPostSearched', undefined);
+
+            } else {
+                console.log('tem resultado')
+                this.jsonSearched = value;
+                this.$emit('jsonOfPostSearched', this.jsonSearched)
+            }
         }
     }
 
@@ -97,9 +106,9 @@ nav {
 }
 
 .nav_center {
-    width: 60vw;
+    width: 47.5vw;
     align-items: center;
-    text-align: center;
+    text-align: right;
 }
 
 .nav_center h1 {
@@ -109,7 +118,7 @@ nav {
 }
 
 .nav_right {
-    width: 20.2vw;
+    width: 32.7vw;
     text-align: end;
 }
 
