@@ -25,23 +25,14 @@ public class Home {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String autor;
-
     private String titulo;
-
     private String conteudo;
-
     private Integer gostar;
-
     private LocalTime time;
-
     private LocalDate date;
-
     private String pathImgLike;
-
     private Boolean likeState;
-
     private String pathImgPost;
 
     @OneToMany(mappedBy = "home", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
