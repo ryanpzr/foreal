@@ -176,3 +176,45 @@ async function updateLikeState(id, likeState) {
     }
 }
 
+export async function saveAccountInfo(formData) {
+    const url = 'http://localhost:8080/auth/account/postAccountConfig'
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            body: formData
+        })
+
+        if (response.ok) {
+            console.log("Requisição realizada com sucesso")
+            return true;
+        } else {
+            console.error("Falha na resposta do servidor");
+            return false;
+        }
+
+    } catch {
+        console.error("Falha na requisição", error);
+    }
+
+}
+
+export async function getAccountInfo() {
+    const url = 'http://localhost:8080/auth/account/getAccountInfo'
+
+    try {
+        const response = await fetch(url)
+
+        if (response.ok) {
+            console.log("Requisição realizada com sucesso")
+            return response.json();
+        } else {
+            console.error("Falha na resposta do servidor");
+            return false;
+        }
+
+    } catch {
+        console.error("Falha na requisição", error);
+    }
+
+}
