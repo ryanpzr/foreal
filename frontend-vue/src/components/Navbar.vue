@@ -26,9 +26,14 @@
                 <button id="button-addPost" @click="toggleStatePost">
                     <img :src="imgAddPost">
                 </button>
-                <button id="button-addPost">
-                    <img src="../assets/img/tres-pontos.png">
-                </button>
+                <button id="button-addPost" @click="showOptions">
+                    <img :src="imgMenuOptions">
+                    <div v-if="isMenuVisible" class="menu">
+                        <ul>
+                            <li @click="this.$router.push('/Login')">Login</li>
+                        </ul>
+                    </div>
+                </button>                
         </div>
     </nav>
 </template>
@@ -41,7 +46,9 @@ export default {
         return {
             showAddPost: false,
             itemSearched: '',
-            jsonSearched: []
+            jsonSearched: [],
+            isMenuVisible: false,
+            imgMenuOptions: '/src/assets/img/tres-pontos.png'
         }
     },
     props: {
@@ -56,6 +63,15 @@ export default {
             }
 
             this.$emit('componentAddPost', this.showAddPost)
+        },
+        showOptions() {
+            this.isMenuVisible = !this.isMenuVisible;
+
+            if(this.isMenuVisible) {
+                this.imgMenuOptions = '/src/assets/img/tres-pontos-selecionado.png'
+            } else {
+                this.imgMenuOptions = '/src/assets/img/tres-pontos.png'
+            }
         },
         async getJsonOfSearched() {
             if(this.itemSearched === '') {
@@ -148,6 +164,33 @@ nav {
 .input-search:hover {
     outline: none;
     color: white;
+} 
+
+.menu {
+  position: absolute;
+  top: 80%; 
+  right: 6%;
+  background-color: rgb(0, 0, 0);
+  border: 1px solid #ffffff;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  width: 80px;
+  z-index: 1000;
+}
+
+/* Estilo para as opções do menu */
+.menu ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.menu ul li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.menu ul li:hover {
+  background-color: #f0f0f0;
 }
 
 </style>
