@@ -41,12 +41,14 @@ import Card from '../components/Card.vue';
 import AddPostCard from '../components/AddPostCard.vue';
 import YourAccount from '../components/YourAccount.vue';
 import CardPostSearched from '@/components/CardPostSearched.vue';
+import EventBus from '@/js/eventBus';
 
 export default {
     data() {
         return {
             valueMainState: '',
-            json: {}
+            json: {},
+            jsonOfPostSearched: null
         }
     },
     components: {
@@ -58,7 +60,6 @@ export default {
     },
     props: {
         postState: {type: Boolean, required: true},
-        jsonOfPostSearched: {type: Object, required: true}
     },
     methods: {
         actionButtonClose(state) {
@@ -72,14 +73,18 @@ export default {
             this.json = value;
         }
     },
-    watch: {
-        jsonOfPostSearched(val) { 
-            if(val === undefined) {
+    created() {
+        EventBus.on('jsonOfPostSearched', (data) => {
+            if(data === undefined) {
                 this.valueMainState = 'buscarDadosHome'
             } else {
                 this.valueMainState = 'cardPostSearched'
+                this.jsonOfPostSearched = data;
             }
-        }
+        })
+    },
+    beforeDestroy() {
+        EventBus.off('jsonOfPostSearched')
     }
 }
 </script>

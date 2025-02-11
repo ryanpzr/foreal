@@ -1,19 +1,16 @@
 <template>
     <Navbar
       @componentAddPost="stateOfPost"
-      @jsonOfPostSearched="(newVal) => this.jsonOfPostSearched = newVal"
       :imgAddPost="imgAddPost"
     ></Navbar>
   
     <MainPage
       :postState="showAddPost"
       @componentAddPost="stateOfPost"
-      :jsonOfPostSearched="jsonOfPostSearched"
     ></MainPage>
   </template>
   
   <script>
-  import { reactive } from 'vue';
   import Navbar from '@/components/Navbar.vue';
   import MainPage from '@/components/MainPage.vue';
 
@@ -25,8 +22,7 @@
   data() {
     return {
       showAddPost: false,
-      imgAddPost: '/src/assets/img/adicionar.png',
-      jsonOfPostSearched: reactive({})
+      imgAddPost: '/src/assets/img/adicionar.png'
     }
   },
   methods: {
