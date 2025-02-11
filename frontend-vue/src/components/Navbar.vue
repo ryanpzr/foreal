@@ -191,7 +191,7 @@ nav {
 }
 
 .menu ul li:hover {
-  background-color: #f0f0f0;
+  background-color: #3a3939;
 }
 
 </style>
