@@ -40,6 +40,7 @@
 
 <script>
 import { getSearchedPost } from '@/js/queryBd';
+import EventBus from '@/js/eventBus';
 
 export default {
     data() {
@@ -75,18 +76,18 @@ export default {
         },
         async getJsonOfSearched() {
             if(this.itemSearched === '') {
-                return this.$emit('jsonOfPostSearched', undefined);
+                return EventBus.emit('jsonOfPostSearched', undefined);
             }
 
             const value = await getSearchedPost(this.itemSearched);
 
             if (value.length === 0) {
-                this.$emit('jsonOfPostSearched', undefined);
+                EventBus.emit('jsonOfPostSearched', undefined);
 
             } else {
                 console.log('tem resultado')
                 this.jsonSearched = value;
-                this.$emit('jsonOfPostSearched', this.jsonSearched)
+                EventBus.emit('jsonOfPostSearched', this.jsonSearched);
             }
         }
     }
