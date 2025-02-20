@@ -18,6 +18,7 @@
           <label for="comment">Comentário:</label>
           <textarea v-model="comment" id="comment" required></textarea>
         </div>
+        <br><br><br><br><br>
         <button type="submit">Enviar Comentário</button>
       </form>
     </div>

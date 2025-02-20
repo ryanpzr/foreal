@@ -5,7 +5,7 @@
       Loading...
     </div>
 
-    <button class="button-close" @click="$emit('actionButtonCloseCard', false)">
+    <button class="button-close" @click="clearValues(), $emit('actionButtonCloseCard', false)">
       <h1>x</h1>
     </button>
     <h2>Criar Novo Post</h2>
@@ -80,7 +80,7 @@ export default {
           });
 
           if (response.ok) {
-            const newJson = response.json()
+            const newJson = await response.json()
             this.$emit('newJson', newJson)
             console.log("Requisição realizada com sucesso")
           } else {
@@ -104,6 +104,7 @@ export default {
         this.author = '';
         this.title = '';
         this.content = '';
+        this.preview = null;
         document.getElementById('image').value = "";
       }
     }
