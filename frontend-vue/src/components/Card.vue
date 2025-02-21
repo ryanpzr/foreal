@@ -16,8 +16,8 @@
                 <p style="margin-left: 3%;">{{ jsonElement.gostar }} pessoas curtiram esse post</p>
         </div>
         <div class="description">
-            <h1>{{ jsonElement.autor }}</h1>
-            <p style="margin-left: 10px;">{{ jsonElement.conteudo }}</p>
+            <h1>{{ jsonElement.titulo }} <span style="margin: 3px;">|</span></h1>
+            <p style="margin-left: 3px;">{{ jsonElement.conteudo }}</p>
         </div>
         <div class="button-comment">
             <button @click="changeStateComment(jsonElement.id)">Comentar</button>
@@ -57,7 +57,8 @@
                 showComments: {},
                 idComment: '',
                 showAddCommentsCard: false,
-                idPostCommentsCard: 0            }
+                idPostCommentsCard: 0            
+            }
         },
         components: {
             AddCommentCard
@@ -71,7 +72,9 @@
                 this.getDataPost();
             },
             valueNewPost(newVal) {
-                this.json.push(newVal);
+                let listContent = this.json;
+                listContent.push(JSON.parse(JSON.stringify(newVal)));
+                this.json = listContent;
             }
         },
         props: {

@@ -140,7 +140,7 @@ nav {
 }
 
 #button-addPost {
-    margin-top: 4%;
+    margin-top: 2.5%;
     margin-right: 15%;
     cursor: pointer;
     color: white;
@@ -178,7 +178,6 @@ nav {
   z-index: 1000;
 }
 
-/* Estilo para as opções do menu */
 .menu ul {
   margin: 0;
   padding: 0;
