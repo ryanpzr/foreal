@@ -65,7 +65,7 @@ export default {
         this.loading = true;
         const url = 'http://localhost:8080/auth/home/postarDadosHome';
 
-        const formData = new FormData();
+        let formData = new FormData();
         formData.append("autor", this.author);
         formData.append("titulo", this.title);
         formData.append("conteudo", this.content);

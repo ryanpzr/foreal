@@ -1,20 +1,22 @@
 package com.example.foreal_project.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.example.foreal_project.dto.HomeDto;
 import com.example.foreal_project.dto.ImgValueDTO;
 import com.example.foreal_project.dto.LikeAndDeslikeDTO;
 import com.example.foreal_project.dto.LikeStateDTO;
 import com.example.foreal_project.model.Home;
 import com.example.foreal_project.repository.HomeRepository;
-import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.List;
+import jakarta.transaction.Transactional;
 
 @Service
 public class HomeService {
@@ -29,18 +31,12 @@ public class HomeService {
 
     public Home postarDados(HomeDto dto) throws IOException {
         MultipartFile imageData = dto.imagem();
-        String baseDir = "C:/Users/ryanp/VsCode/foreal/frontend-vue/src/assets/imagesPosts/";
-
-        String filePath = baseDir + imageData.getOriginalFilename();
-        File destine = new File(filePath);
-
-        imageData.transferTo(destine);
-
+        String uploadDir = "/data/images/";
+        String localFilePath = uploadDir + imageData.getOriginalFilename();
+        imageData.transferTo(new File(localFilePath));
+        String fileSplitted = localFilePath.replaceAll(uploadDir, "");
         Home home = new Home(dto);
-
-        String fileSplitted = filePath.replaceAll(baseDir, "");
         home.setPathImagem(fileSplitted);
-
         return repository.save(home);
     }
 

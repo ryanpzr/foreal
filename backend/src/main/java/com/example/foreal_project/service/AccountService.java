@@ -1,16 +1,17 @@
 package com.example.foreal_project.service;
 
-import com.example.foreal_project.dto.AccountDTO;
-import com.example.foreal_project.model.AccountInfo;
-import com.example.foreal_project.repository.AccountInfoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.example.foreal_project.dto.AccountDTO;
+import com.example.foreal_project.model.AccountInfo;
+import com.example.foreal_project.repository.AccountInfoRepository;
 
 @Service
 public class AccountService {
@@ -20,7 +21,7 @@ public class AccountService {
 
     public AccountInfo addAccountConfig(AccountDTO accountDTO) {
         MultipartFile imageData = accountDTO.picture();
-        String baseDir = "C:/Users/ryanp/VsCode/foreal/frontend-vue/src/assets/imageProfilePicture/";
+        String baseDir = "/data/images/";
 
         String filePath = baseDir + imageData.getOriginalFilename();
         File destine = new File(filePath);

@@ -1,0 +1,47 @@
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Oscaveiras1!
+      POSTGRES_DB: foreal
+    ports:
+      - "5432:5432"
+    networks:
+    - backend_network
+
+  backend:
+    build:
+      context: ./backend
+    container_name: foreal-bck-container
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/foreal
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: Oscaveiras1!
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - backend_network
+    volumes:
+      - images:/data/images
+
+  frontend:
+    build:
+      context: ./frontend-vue
+    container_name: foreal-fr-container
+    ports:
+      - "8081:3000"
+    networks:
+      - backend_network
+    volumes:
+      - images:/data/images
+networks:
+  backend_network:
+    driver: bridge
+volumes:
+  images:
+    driver: local

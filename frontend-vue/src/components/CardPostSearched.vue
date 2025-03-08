@@ -67,8 +67,7 @@ import AddCommentCard from './AddCommentCard.vue';
                 setLike(jsonElement, this.json);
             },
             getImagePost(value) {
-                const imagePath = new URL(`../assets/imagesPosts/${value}`, import.meta.url).href;
-                return imagePath;
+                return 'http://localhost:8080/auth/home/images/' + value;
             },
             toggleComments(id) {
                 this.showComments = !this.showComments;

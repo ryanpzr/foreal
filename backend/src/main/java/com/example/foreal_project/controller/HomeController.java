@@ -1,17 +1,30 @@
 package com.example.foreal_project.controller;
 
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.foreal_project.dto.HomeDto;
 import com.example.foreal_project.dto.ImgValueDTO;
 import com.example.foreal_project.dto.LikeAndDeslikeDTO;
 import com.example.foreal_project.dto.LikeStateDTO;
 import com.example.foreal_project.model.Home;
 import com.example.foreal_project.service.HomeService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
-import java.util.List;
 
 @RestController
 @RequestMapping("/auth/home")
@@ -19,6 +32,21 @@ public class HomeController {
 
     @Autowired
     private HomeService service;
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/images/{filename}")
+    public ResponseEntity<Resource> serveImage(@PathVariable String filename) {
+        java.nio.file.Path file = Paths.get("/data/images").resolve(filename);
+        Resource resource = new FileSystemResource(file);
+
+        if (resource.exists() && resource.isReadable()) {
+            return ResponseEntity.ok()
+                    .contentType(MediaType.IMAGE_JPEG)
+                    .body(resource);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @CrossOrigin(origins = "*")
     @PostMapping("postarDadosHome")
