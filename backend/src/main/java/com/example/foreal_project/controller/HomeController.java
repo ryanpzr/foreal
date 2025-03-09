@@ -36,13 +36,12 @@ public class HomeController {
     @CrossOrigin(origins = "*")
     @GetMapping("/images/{filename}")
     public ResponseEntity<Resource> serveImage(@PathVariable String filename) {
-        java.nio.file.Path file = Paths.get("/data/images").resolve(filename);
-        Resource resource = new FileSystemResource(file);
+        Resource resource = service.buscarImagem(filename);
 
         if (resource.exists() && resource.isReadable()) {
             return ResponseEntity.ok()
-                    .contentType(MediaType.IMAGE_JPEG)
-                    .body(resource);
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(resource);
         } else {
             return ResponseEntity.notFound().build();
         }

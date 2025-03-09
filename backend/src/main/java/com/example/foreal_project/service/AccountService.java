@@ -22,8 +22,11 @@ public class AccountService {
     public AccountInfo addAccountConfig(AccountDTO accountDTO) {
         MultipartFile imageData = accountDTO.picture();
         String baseDir = "/data/images/";
-
-        String filePath = baseDir + imageData.getOriginalFilename();
+        String filename = imageData.getOriginalFilename();
+        if(imageData.getOriginalFilename().contains(" ")) {
+            filename = filename.replaceAll(" ", "");
+        }
+        String filePath = baseDir + filename;
         File destine = new File(filePath);
 
         try {

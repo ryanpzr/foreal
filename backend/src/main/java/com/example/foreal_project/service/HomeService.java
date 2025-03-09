@@ -4,11 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
+import java.nio.file.Paths;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import com.example.foreal_project.dto.HomeDto;
 import com.example.foreal_project.dto.ImgValueDTO;
 import com.example.foreal_project.dto.LikeAndDeslikeDTO;
@@ -32,12 +33,23 @@ public class HomeService {
     public Home postarDados(HomeDto dto) throws IOException {
         MultipartFile imageData = dto.imagem();
         String uploadDir = "/data/images/";
-        String localFilePath = uploadDir + imageData.getOriginalFilename();
+
+        String filename = imageData.getOriginalFilename();
+        if(imageData.getOriginalFilename().contains(" ")) {
+            filename = filename.replaceAll(" ", "");
+        }
+
+        String localFilePath = uploadDir + filename;
         imageData.transferTo(new File(localFilePath));
         String fileSplitted = localFilePath.replaceAll(uploadDir, "");
         Home home = new Home(dto);
         home.setPathImagem(fileSplitted);
         return repository.save(home);
+    }
+
+    public Resource buscarImagem(String filename) {
+        java.nio.file.Path file = Paths.get("/data/images").resolve(filename);
+        return new FileSystemResource(file);
     }
 
     @Transactional

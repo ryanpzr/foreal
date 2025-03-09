@@ -65,7 +65,7 @@
       this.jsonAccountInfo = await getAccountInfo();
 
       if(this.jsonAccountInfo.length > 0) {
-        this.profilePreview = '/src/assets/imageProfilePicture/' + this.jsonAccountInfo[0]["pathProfilePicture"]
+        this.profilePreview = 'http://localhost:8080/auth/home/images/' + this.jsonAccountInfo[0]["pathProfilePicture"]
         this.name = this.jsonAccountInfo[0]["name"]
         this.email = this.jsonAccountInfo[0]["email"]
         this.phone = this.jsonAccountInfo[0]["cellphone"]
