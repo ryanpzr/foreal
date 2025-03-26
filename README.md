@@ -21,6 +21,12 @@ A plataforma oferece um ambiente simples, amigável e seguro para a criação de
 - [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 - [SPRING-BOOT](https://docs.spring.io/spring-framework/reference/index.html)
 - [JAVA](https://docs.oracle.com/en/java/)
+
+## Como subir o projeto
+
+Entre na pasta foreal do projeto, onde contém o arquivo "docker-compose.yml". <br>
+Digite no terminal: "docker-compose up --build -d" <br>
+Depois de concluido, a aplicação estará rodando na porta 8081 do seu navegador.
   
 ## 📺 Tela inicial/Home
 <div>
