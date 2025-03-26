@@ -8,7 +8,7 @@
         <img class="img-post" :src="getImagePost(jsonElement.pathImgPost)"> 
         <div class="like">
             <button v-on:click="setLikePost(jsonElement)" class="like-button" aria-label="Like">
-                <img style="border: none" :src="jsonElement.pathImgLike" alt="Like" />
+                <img style="border: none" :src="getImgButtonLike(jsonElement.likeState)" alt="Like" />
             </button>
             <button class="salvar-button" aria-label="Salvar" style="margin-left: 3%;">
                 <img style="border: none" src="../assets/img/salvo.png" alt="Salvar" />
@@ -16,16 +16,16 @@
                 <p style="margin-left: 3%;">{{ jsonElement.gostar }} pessoas curtiram esse post</p>
         </div>
         <div class="description">
-            <h1>{{ jsonElement.autor }}</h1>
-            <p style="margin-left: 10px;">{{ jsonElement.conteudo }}</p>
+            <h1>{{ jsonElement.titulo }} <span style="margin: 3px;">|</span></h1>
+            <p style="margin-left: 3px;">{{ jsonElement.conteudo }}</p>
         </div>
         <div class="button-comment">
             <button @click="changeStateComment(jsonElement.id)">Comentar</button>
-            <a href="#" @click.prevent="toggleComments(jsonElement.id)" :class="{'active-comments': showComments}">
+            <a href="#" @click.prevent="toggleComments(jsonElement.id)" :class="{'active-comments': showComments[jsonElement.id]}">
                 Exibir Comentários
             </a>
         </div>
-        <transition-group name="fade" tag="div" v-if="jsonElement.id == this.idComment">
+        <transition-group name="fade" tag="div" v-if="showComments[jsonElement.id]">
             <div v-for="comment in jsonElement.comentarios" :key="comment.autor" class="card-toComment">
                 <h1>{{ comment.autor }}:</h1>
                 <p style="margin-left: 10px;">{{ comment.comentario }}</p>
@@ -38,60 +38,56 @@
         v-show="showAddCommentsCard"
         :newIdPostEmitted="idPostCommentsCard"
         @valueNewComment="pushNewComment"
+        @closeCommentCard="this.showAddCommentsCard = !this.showAddCommentsCard"
     >
     </AddCommentCard>
 </template>
 
 <script>
-import AddCommentCard from './AddCommentCard.vue';
+    import { getAllPosts, setLike, getImgLike } from '/src/js/queryBd.js';
+    import AddCommentCard from './AddCommentCard.vue';
 
     export default {
         data() {
             return {
                 like: null,
-                showComments: false,
+                isClicked: false,
+                showComments: {},
                 idComment: '',
                 showAddCommentsCard: false,
-                idPostCommentsCard: 0,
-                json: {}
+                idPostCommentsCard: 0
             }
-        },
-        props: {
-            postSearched: Object
         },
         components: {
             AddCommentCard
         },
+        props: {
+            postSearched: Object
+        },
         methods: {
             async setLikePost(jsonElement) {
-                setLike(jsonElement, this.json);
+                setLike(jsonElement, this.postSearched);
             },
             getImagePost(value) {
                 return 'http://localhost:8080/auth/home/images/' + value;
             },
             toggleComments(id) {
-                this.showComments = !this.showComments;
-
-                if(!this.showComments) {
-                    this.idComment = '';
-                } else {
-                    this.idComment = id;
-                }
+                this.showComments[id] = !this.showComments[id];
+                this.idComment = !this.showComments[id] ? '' : id;
             },
             changeStateComment(id) {
-                this.showAddCommentsCard = !this.showAddCommentsCard;
                 this.idPostCommentsCard = id;
+                this.showAddCommentsCard = !this.showAddCommentsCard;
             },
             pushNewComment(newJson, idPost) {
-                console.log('chegou aqui')
-                console.log(newJson)
-                console.log(idPost)
-
-                for (const element of this.json) {
+                for (const element of this.postSearched) {
                     if (element.id === idPost) {
                         element.comentarios.push(newJson);
                     }
                 }
+            },
+            getImgButtonLike(likeState) {
+                return getImgLike(likeState)
             }
         }
     }

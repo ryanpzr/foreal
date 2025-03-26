@@ -1,17 +1,24 @@
 package com.example.foreal_project.model;
-
-import com.example.foreal_project.dto.HomeDto;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.annotations.Type;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.example.foreal_project.dto.HomeDto;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity(name = "Home")
 @Table(name = "home")
@@ -31,7 +38,6 @@ public class Home {
     private Integer gostar;
     private LocalTime time;
     private LocalDate date;
-    private String pathImgLike;
     private Boolean likeState;
     private String pathImgPost;
 
@@ -45,7 +51,6 @@ public class Home {
         this.pathImgPost = "";
         this.gostar = 1;
         this.likeState = false;
-        this.pathImgLike = "/src/assets/img/like.png";
         this.time = LocalTime.now();
         this.date = LocalDate.now();
     }

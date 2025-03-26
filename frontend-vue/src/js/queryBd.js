@@ -31,6 +31,13 @@ export async function getSearchedPost(item) {
 
 }
 
+export function getImgLike(likeState) {
+    if(likeState) {
+        return require('../assets/img/like-clicado.png')
+    } 
+    return require('../assets/img/like.png')
+}
+
 export async function setLike(jsonElement, json) {
     const url = 'http://localhost:8080/auth/home/like';
     var likeState = 0;
@@ -113,42 +120,12 @@ function changeImgLike(jsonElement) {
     jsonElement.likeState = !jsonElement.likeState;
 
     if (jsonElement.likeState) {
-        updateImgBd(jsonElement.id, '/src/assets/img/like-clicado.png');
         updateLikeState(jsonElement.id, jsonElement.likeState);
-
-        jsonElement.pathImgLike = '/src/assets/img/like-clicado.png'
+        jsonElement.pathImgLike = require('../assets/img/like-clicado.png')
     } else {
-        updateImgBd(jsonElement.id, '/src/assets/img/like.png');
         updateLikeState(jsonElement.id, jsonElement.likeState);
-
-        jsonElement.pathImgLike = '/src/assets/img/like.png'
+        jsonElement.pathImgLike = require('../assets/img/like.png');
     }
-}
-
-async function updateImgBd(id, newImgValue) {
-    const url = 'http://localhost:8080/auth/home/updateImgValue';
-
-    const data = {
-        id: id,
-        imgValue: newImgValue
-    }
-
-    try {
-        const response = await fetch(url, {
-            method: "PUT",
-            headers: {
-                'Content-Type': 'application/json' 
-            },
-            body: JSON.stringify(data)
-        });
-
-        if(response.ok) {
-        }
-
-    } catch (error) {
-        console.log('Erro ao buscar os posts:', error);
-    }
-
 }
 
 async function updateLikeState(id, likeState) {

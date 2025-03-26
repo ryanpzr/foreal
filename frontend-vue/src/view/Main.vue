@@ -22,16 +22,18 @@
   data() {
     return {
       showAddPost: false,
-      imgAddPost: '/src/assets/img/adicionar.png'
+      imgPaths: {
+        selected: require("../assets/img/adicionar-selecionado.png"),
+        normal: require("../assets/img/adicionar.png"),
+      },
+      imgAddPost: require("../assets/img/adicionar.png"),
     }
   },
   methods: {
     stateOfPost(state) {
       this.showAddPost = state;
-      this.imgAddPost = this.showAddPost
-        ? '/src/assets/img/adicionar-selecionado.png'
-        : '/src/assets/img/adicionar.png';
-    }
+      this.imgAddPost = state ? this.imgPaths.selected : this.imgPaths.normal;
+    },
   }
   }
   </script>

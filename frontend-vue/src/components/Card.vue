@@ -8,7 +8,7 @@
         <img class="img-post" :src="getImagePost(jsonElement.pathImgPost)"> 
         <div class="like">
             <button v-on:click="setLikePost(jsonElement)" class="like-button" aria-label="Like">
-                <img style="border: none" :src="jsonElement.pathImgLike" alt="Like" />
+                <img style="border: none" :src="getImgButtonLike(jsonElement.likeState)" alt="Like" />
             </button>
             <button class="salvar-button" aria-label="Salvar" style="margin-left: 3%;">
                 <img style="border: none" src="../assets/img/salvo.png" alt="Salvar" />
@@ -41,10 +41,12 @@
         @closeCommentCard="this.showAddCommentsCard = !this.showAddCommentsCard"
     >
     </AddCommentCard>
-</template>
+</template> props: {
+    postSearched: Object
+},
 
 <script>
-    import { getAllPosts, setLike } from '/src/js/queryBd.js';
+    import { getAllPosts, setLike, getImgLike } from '/src/js/queryBd.js';
     import AddCommentCard from './AddCommentCard.vue';
 
     export default {
@@ -57,7 +59,7 @@
                 showComments: {},
                 idComment: '',
                 showAddCommentsCard: false,
-                idPostCommentsCard: 0            
+                idPostCommentsCard: 0
             }
         },
         components: {
@@ -83,8 +85,7 @@
         },
         methods: {
             async getDataPost() {
-                const responseJson = await getAllPosts(this.mainState);
-                this.json = responseJson;
+                this.json = await getAllPosts(this.mainState);
             },
             async setLikePost(jsonElement) {
                 setLike(jsonElement, this.json);
@@ -94,28 +95,21 @@
             },
             toggleComments(id) {
                 this.showComments[id] = !this.showComments[id];
-
-                    if(!this.showComments[id]) {
-                        this.idComment = '';
-                    } else {
-                        this.idComment = id;
-                    }
-                
+                this.idComment = !this.showComments[id] ? '' : id;
             },
             changeStateComment(id) {
                 this.idPostCommentsCard = id;
                 this.showAddCommentsCard = !this.showAddCommentsCard;
             },
             pushNewComment(newJson, idPost) {
-                console.log('chegou aqui')
-                console.log(newJson)
-                console.log(idPost)
-
                 for (const element of this.json) {
                     if (element.id === idPost) {
                         element.comentarios.push(newJson);
                     }
                 }
+            },
+            getImgButtonLike(likeState) {
+                return getImgLike(likeState)
             }
         }
     }

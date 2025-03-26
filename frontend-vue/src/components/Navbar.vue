@@ -27,7 +27,7 @@
                     <img :src="imgAddPost">
                 </button>
                 <button id="button-addPost" @click="showOptions">
-                    <img :src="imgMenuOptions">
+                    <img :src="imgOptions">
                     <div v-if="isMenuVisible" class="menu">
                         <ul>
                             <li @click="this.$router.push('/Login')">Login</li>
@@ -49,30 +49,25 @@ export default {
             itemSearched: '',
             jsonSearched: [],
             isMenuVisible: false,
-            imgMenuOptions: '/src/assets/img/tres-pontos.png'
+            imgMenuOptions: require("../assets/img/tres-pontos.png")
         }
     },
     props: {
         imgAddPost: {type: String, required: true}
     },
+    computed: {
+        imgOptions() {
+            return this.imgMenuOptions;
+        }
+    },
     methods: {
         toggleStatePost() {
-            if(this.imgAddPost == '/src/assets/img/adicionar.png') {
-                this.showAddPost = true;
-            } else {
-                this.showAddPost = false;
-            }
-
+            this.showAddPost = !this.imgAddPost.includes('adicionar-') ? true : false;
             this.$emit('componentAddPost', this.showAddPost)
         },
         showOptions() {
             this.isMenuVisible = !this.isMenuVisible;
-
-            if(this.isMenuVisible) {
-                this.imgMenuOptions = '/src/assets/img/tres-pontos-selecionado.png'
-            } else {
-                this.imgMenuOptions = '/src/assets/img/tres-pontos.png'
-            }
+            this.imgMenuOptions = this.isMenuVisible ? require("../assets/img/tres-pontos-selecionado.png") : require("../assets/img/tres-pontos.png");
         },
         async getJsonOfSearched() {
             if(this.itemSearched === '') {
@@ -85,7 +80,6 @@ export default {
                 EventBus.emit('jsonOfPostSearched', undefined);
 
             } else {
-                console.log('tem resultado')
                 this.jsonSearched = value;
                 EventBus.emit('jsonOfPostSearched', this.jsonSearched);
             }

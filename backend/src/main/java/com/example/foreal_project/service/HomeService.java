@@ -2,16 +2,17 @@ package com.example.foreal_project.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import java.nio.file.Paths;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.example.foreal_project.dto.HomeDto;
-import com.example.foreal_project.dto.ImgValueDTO;
 import com.example.foreal_project.dto.LikeAndDeslikeDTO;
 import com.example.foreal_project.dto.LikeStateDTO;
 import com.example.foreal_project.model.Home;
@@ -65,12 +66,6 @@ public class HomeService {
     public List<Home> buscarBreaking() {
         LocalDate sevenDaysAgo = LocalDate.now().minusDays(7);
         return repository.buscarBreaking(sevenDaysAgo);
-    }
-
-    @Transactional
-    public String updateImgValue(ImgValueDTO imgValueDTO) {
-        repository.updateImgValue(imgValueDTO.id(), imgValueDTO.imgValue());
-        return "";
     }
 
     @Transactional
